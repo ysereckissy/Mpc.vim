@@ -19,8 +19,16 @@
 " Below is a shorter version of the same function
 "----------------------------------------------------------------
 function! OpenMpc()
-    let cmd = "mpc --format '%position% %artist% / %album% / %title%' playlist"
-    let playlist = split(system(cmd), '\n')
-    new                                             " Open a new window
-    call append(0, playlist)
+    if(bufexists('mpc.mpdv'))
+        let mpcwin = bufwinnr('mpc.mpdv')
+        if(mpcwin == -1)
+            execute "sbuffer " . bufnr('mpc.mpdv')
+        else
+            execute mpcwin . "wincmd w"
+            return
+        endif
+     else
+         execute "new mpc.mpdv"
+     endif
+     call mpc#mpc#DisplayPlaylist()
 endfunction

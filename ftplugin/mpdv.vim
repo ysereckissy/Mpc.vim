@@ -15,3 +15,19 @@ endfunction
 set buftype=nofile
 set statusline=%!GetMpcStatusline() 
 
+setlocal conceallevel=3
+setlocal concealcursor=nvic
+
+if(!exists(":PlaySelectedSong"))
+    command -buffer PlaySelectedSong call mpc#mpc#PlaySong(line("."))
+endif
+
+if(!exists(":ToggleRandom"))
+    command -buffer ToggleRandom call mpc#mpc#ToggleRandom()
+endif
+
+if(!exists(":ToggleRepeat"))
+    command -buffer ToggleRepeat mpc#mpc#ToggleRepeat()
+endif
+
+
